@@ -1,0 +1,84 @@
+<html lang="tr">
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><lin<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sibersözlük - JavaScript SpeedTest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+var imageAddr = "https://i.ibb.co/RgrRwjx/sibersozluk-5mb-speedtest.jpg"; 
+var downloadSize = 4995374;
+
+function ShowProgressMessage(msg) {
+    if (console) {
+        if (typeof msg == "string") {
+            console.log(msg);
+        } else {
+            for (var i = 0; i < msg.length; i++) {
+                console.log(msg[i]);
+            }
+        }
+    }
+    
+    var oProgress = document.getElementById("progress");
+    if (oProgress) {
+        var actualHTML = (typeof msg == "string") ? msg : msg.join("<br />");
+        oProgress.innerHTML = actualHTML;
+    }
+}
+
+function InitiateSpeedDetection() {
+    ShowProgressMessage("Sibersözlük'e ait resim yükleniyor, lütfen bekleyin...");
+    window.setTimeout(MeasureConnectionSpeed, 1);
+};    
+
+if (window.addEventListener) {
+    window.addEventListener('load', InitiateSpeedDetection, false);
+} else if (window.attachEvent) {
+    window.attachEvent('onload', InitiateSpeedDetection);
+}
+
+function MeasureConnectionSpeed() {
+    var startTime, endTime;
+    var download = new Image();
+    download.onload = function () {
+        endTime = (new Date()).getTime();
+        showResults();
+    }
+    
+    download.onerror = function (err, msg) {
+        ShowProgressMessage("Geçersiz resim ya da indirme işleminde hata bulunuyor.");
+    }
+    
+    startTime = (new Date()).getTime();
+    var cacheBuster = "?nnn=" + startTime;
+    download.src = imageAddr + cacheBuster;
+    
+    function showResults() {
+        var duration = (endTime - startTime) / 1000;
+        var bitsLoaded = downloadSize * 8;
+        var speedBps = (bitsLoaded / duration).toFixed(2);
+        var speedKbps = (speedBps / 1024).toFixed(2);
+        var speedMbps = (speedKbps / 1024).toFixed(2);
+        ShowProgressMessage([
+            "Sibersözlük internet hızınızı bu şekilde yorumluyor:", 
+            speedBps + " bps", 
+            speedKbps + " kbps", 
+            speedMbps + " Mbps"
+        ]);
+    }
+}
+</script>
+<style>
+	body{
+		font-family: 'Inter', sans-serif;
+		color: #fff;
+		background: #000000;
+		}
+</style>
+</head>
+<body>
+<h1 id="progress">JavaScript kapalı veya tarayıcınız gerçekten yavaş</h1>
+</body>
+</html>
