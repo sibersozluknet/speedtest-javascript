@@ -1,5 +1,5 @@
-### ⚡ Speedtest JavaScript
+## ⚡Speedtest JavaScript
 JavaScript ile internet hızı testi.
 
-### 🔗 Demo
+## 🔗Demo
 Demoya ulaşmak için [tıklayınız.](https://sibersozluknet.github.io/speedtest-javascript/)
